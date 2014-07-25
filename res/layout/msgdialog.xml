@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    >
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:background="#81542454"
+        android:id="@+id/themelayout"
+        android:gravity="center"
+        >
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/theme"/>
+    </LinearLayout>
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content"
+        android:layout_below="@id/themelayout"
+        android:background="#00000000"/>
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:id="@+id/replylayout"
+        android:orientation="horizontal"
+        android:background="@anim/layoutin"
+        android:animateLayoutChanges="true">
+        <EditText android:layout_width="230dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/replycontent"
+            android:singleLine="true"
+            ></EditText>
+        <Button android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/send"
+            android:text="Send"
+            >
+        </Button>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/option"
+        android:background="@anim/layoutin"
+        android:animateLayoutChanges="true">
+        <Button android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/delete"
+            android:layout_weight="1"
+            android:text="Delete"></Button>
+        <Button android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/reply"
+            android:layout_weight="1"
+            android:text="Reply"></Button>
+    </LinearLayout>
+</RelativeLayout>
