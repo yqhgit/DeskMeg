@@ -25,7 +25,6 @@
         android:visibility="gone"
         android:id="@+id/replylayout"
         android:orientation="horizontal"
-        android:background="@anim/layoutin"
         android:animateLayoutChanges="true">
         <EditText android:layout_width="230dp"
             android:layout_height="fill_parent"
@@ -43,7 +42,6 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/option"
-        android:background="@anim/layoutin"
         android:animateLayoutChanges="true">
         <Button android:layout_width="wrap_content"
             android:layout_height="fill_parent"

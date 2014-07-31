@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@android:color/white"
+    >
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        >
+        <ImageView android:layout_alignParentLeft="true"
+            android:layout_width="40dp"
+            android:layout_centerVertical="true"
+            android:layout_height="40dp"
+            android:background="#112112"
+            android:id="@+id/photo"
+            />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="我们"
+            android:layout_marginLeft="10dp"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:layout_toRightOf="@id/photo"
+            android:ellipsize="end"/>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/msgoutline"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/photo"
+            android:text="我们"
+            android:layout_marginLeft="10dp"
+            android:singleLine="true"
+            android:textSize="13sp"
+            />
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/msgdate"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:textSize="11sp"
+            android:text="fshoh45"
+            android:ellipsize="end"
+            />
+    </RelativeLayout>
+    <ImageView android:layout_width="fill_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/item_partline"/>
+</LinearLayout>

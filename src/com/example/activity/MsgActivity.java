@@ -20,6 +20,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,6 +77,7 @@ public class MsgActivity extends Activity{
 				LinearLayout replylayout = (LinearLayout) findViewById(R.id.replylayout);
 				option.setVisibility(View.GONE);
 				replylayout.setVisibility(View.VISIBLE);
+				editext.startAnimation(AnimationUtils.loadAnimation(MsgActivity.this, R.anim.editin) );
 			}
 		});
 		send.setOnClickListener(new OnClickListener() {

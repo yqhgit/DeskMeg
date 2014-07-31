@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#10ffffff</color>
+    <color name="item_partline">#9f9eaa</color>
+    <color name="header_bg">#02CA16</color>
+    <color name="textcolor_white">#ffffff</color>
 </resources>

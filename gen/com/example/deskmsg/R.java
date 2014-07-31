@@ -9,31 +9,41 @@ package com.example.deskmsg;
 
 public final class R {
     public static final class anim {
-        public static final int layoutin=0x7f040000;
+        public static final int editin=0x7f040000;
+        public static final int editout=0x7f040001;
     }
     public static final class attr {
     }
     public static final class color {
+        public static final int header_bg=0x7f050002;
+        public static final int item_partline=0x7f050001;
+        public static final int textcolor_white=0x7f050003;
         public static final int transparent=0x7f050000;
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int content=0x7f080003;
-        public static final int delete=0x7f080008;
-        public static final int option=0x7f080007;
-        public static final int reply=0x7f080009;
-        public static final int replycontent=0x7f080005;
-        public static final int replylayout=0x7f080004;
-        public static final int send=0x7f080006;
-        public static final int sendmsg=0x7f080000;
-        public static final int theme=0x7f080002;
-        public static final int themelayout=0x7f080001;
+        public static final int back=0x7f080000;
+        public static final int content=0x7f080007;
+        public static final int delete=0x7f08000c;
+        public static final int msgdate=0x7f080003;
+        public static final int msgoutline=0x7f080002;
+        public static final int option=0x7f08000b;
+        public static final int photo=0x7f080001;
+        public static final int reply=0x7f08000d;
+        public static final int replycontent=0x7f080009;
+        public static final int replylayout=0x7f080008;
+        public static final int send=0x7f08000a;
+        public static final int sendmsg=0x7f080004;
+        public static final int theme=0x7f080006;
+        public static final int themelayout=0x7f080005;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
-        public static final int msgdialog=0x7f030001;
+        public static final int header=0x7f030000;
+        public static final int items=0x7f030001;
+        public static final int main=0x7f030002;
+        public static final int msgdialog=0x7f030003;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
