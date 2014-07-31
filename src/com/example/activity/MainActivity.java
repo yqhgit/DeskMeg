@@ -13,11 +13,12 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		Intent intent = new Intent();
-		intent.setClass(this, ReceiveMsg.class);
-		startService(intent);
-		finish();
+		
 		
 	}
-    
+    void startservice(){
+    	Intent intent = new Intent();
+		intent.setClass(this, ReceiveMsg.class);
+		startService(intent);
+    }
 }

@@ -23,13 +23,11 @@ import com.example.bean.Msg;
 import com.example.db.DatabaseOpenHelper;
 
 public class MsgDao {
-    private DatabaseOpenHelper helper;
     private Context context;
     public String SMS_CONTENT = "content://sms";
     public MsgDao(Context context) {
 		// TODO Auto-generated constructor stub
     	this.context = context;
-    	helper = new DatabaseOpenHelper(context);
 	}
     //²éÑ¯Î´¶Á¶ÌÐÅ
     public List<Msg> searchnewmsg(){

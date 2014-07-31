@@ -5,10 +5,13 @@
     android:orientation="vertical" 
     android:background="#e0000000"
     >
-    <Button 
-        android:id="@+id/sendmsg"
+    <include layout="@layout/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"/>
+    <ListView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listmsg">
+        
+    </ListView>
 
 </LinearLayout>
