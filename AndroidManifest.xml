@@ -19,11 +19,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        >
+        android:theme="@android:style/Theme.Black.NoTitleBar">
         <activity android:name="com.example.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,6 +30,7 @@
             android:theme="@style/Msg"
             >
         </activity>
+        <activity android:name="com.example.activity.TalkToActivity"></activity>
         <service android:name="com.example.activity.ReceiveMsg"></service>
     </application>
 
