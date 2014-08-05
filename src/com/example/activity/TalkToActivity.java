@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,7 +42,9 @@ public class TalkToActivity extends Activity{
         contentlayout = (LinearLayout) findViewById(R.id.talktocontent);
         Bundle bundle = getIntent().getBundleExtra("bundle");
         allcontact = (AllContact) bundle.getSerializable("allcontact");
+        Log.e("threadid","" + allcontact.getThread_id()+"");
         list = new MsgDao(context).getMsgByThread_id(allcontact.getThread_id());
+        Log.e("listlength","" + list.size());
         for (Msg msg : list) {
             if(msg.sendorreceive)
                 addmyselfcontent(msg.getContent());
@@ -53,8 +56,9 @@ public class TalkToActivity extends Activity{
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(TalkToActivity.this, MainActivity.class);
+                Log.e("imgin","click");
+//                Intent intent = new Intent();
+//                intent.setClass(TalkToActivity.this, MainActivity.class);
                 TalkToActivity.this.finish();
             }
         });

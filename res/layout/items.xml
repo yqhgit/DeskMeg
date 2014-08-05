@@ -41,7 +41,7 @@
             android:layout_alignParentRight="true"
             android:id="@+id/msgdate"
             android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@id/contacter"
             android:textSize="11sp"
             android:text="fshoh45"
             android:ellipsize="end"

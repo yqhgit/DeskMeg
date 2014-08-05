@@ -10,7 +10,8 @@
         android:layout_height="40dp"/>
     <ListView android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listmsg">
+        android:id="@+id/listmsg"
+        android:divider="@null">
         
     </ListView>
 

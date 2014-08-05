@@ -11,10 +11,7 @@
         android:id="@+id/talktocontent">
     </LinearLayout>
     </ScrollView>
-    <ImageView android:layout_width="fill_parent"
-            android:layout_height="0.1dp"
-            android:background="@android:color/darker_gray"
-            android:layout_above="@id/bottomlayout"/>
+    
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
@@ -29,6 +26,11 @@
             android:id="@+id/talksend"
             android:layout_weight="1"
             android:text="send"
+            android:layout_gravity="center_vertical"
             />
     </LinearLayout>
+    <ImageView android:layout_width="fill_parent"
+            android:layout_height="0.1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_above="@id/bottomlayout"/>
 </RelativeLayout>

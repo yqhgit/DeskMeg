@@ -17,6 +17,7 @@ public final class R {
     public static final class color {
         public static final int header_bg=0x7f050002;
         public static final int item_partline=0x7f050001;
+        public static final int textcolor_blackgray=0x7f050004;
         public static final int textcolor_white=0x7f050003;
         public static final int transparent=0x7f050000;
     }
