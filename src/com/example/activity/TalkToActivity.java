@@ -66,7 +66,7 @@ public class TalkToActivity extends Activity{
     void addmyselfcontent(String msgtext){
         View view = LayoutInflater.from(context).inflate(R.layout.myselfcontent, null);
         TextView text = (TextView) view.findViewById(R.id.myselftext);
-        ImageView img = (ImageView) view.findViewById(R.id.oppsitetext);
+        ImageView img = (ImageView) view.findViewById(R.id.myselfphoto);
         img.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_launcher));
         text.setText(msgtext);
         //img.setBackgroundDrawable(msg.ge);

@@ -15,6 +15,7 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int bg_grey=0x7f050005;
         public static final int header_bg=0x7f050002;
         public static final int item_partline=0x7f050001;
         public static final int textcolor_blackgray=0x7f050004;
@@ -53,7 +54,8 @@ public final class R {
         public static final int replylayout=0x7f080009;
         public static final int send=0x7f08000b;
         public static final int talksend=0x7f080018;
-        public static final int talktocontent=0x7f080015;
+        public static final int talktocontent=0x7f080019;
+        public static final int tallayoutk_head=0x7f080015;
         public static final int theme=0x7f080007;
         public static final int themelayout=0x7f080006;
     }

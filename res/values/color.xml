@@ -5,4 +5,5 @@
     <color name="header_bg">#02CA16</color>
     <color name="textcolor_white">#ffffff</color>
     <color name="textcolor_blackgray">#555555</color>
+    <color name="bg_grey">#E3E3E3</color>
 </resources>

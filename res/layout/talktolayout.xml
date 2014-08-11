@@ -2,15 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/white">
-    <include layout="@layout/header"/>
-    <ScrollView android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-    <LinearLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/talktocontent">
-    </LinearLayout>
-    </ScrollView>
+    android:background="@color/bg_grey">
+    <include layout="@layout/header"
+        android:layout_alignParentTop="true"
+        android:id="@+id/tallayoutk_head"/>
     
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="40dp"
@@ -33,4 +28,15 @@
             android:layout_height="0.1dp"
             android:background="@android:color/darker_gray"
             android:layout_above="@id/bottomlayout"/>
+    <ScrollView android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/tallayoutk_head"
+        android:layout_above="@id/bottomlayout"
+        >
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/talktocontent">
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

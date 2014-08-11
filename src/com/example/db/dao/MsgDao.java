@@ -167,12 +167,13 @@ public class MsgDao {
     public List<Msg> getMsgByThread_id(int thread_id){
         List<Msg> list = new ArrayList<Msg>();
         Cursor cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]{"_id","date","body","type"}, 
-                "thread_id = ?", new String[]{"0"}, "date desc");
+                "thread_id = ?", new String[]{String.valueOf(thread_id)}, "date desc");
         int idindex = cursor.getColumnIndex("_id");
         int typeindex = cursor.getColumnIndex("type");
         int dateindex = cursor.getColumnIndex("date");
         int bodyindex = cursor.getColumnIndex("body");
         while(cursor.moveToNext()){
+            Log.e("cursor", "not null");
             Msg msg = new Msg();
             msg.setId(cursor.getInt(idindex));
             int type = cursor.getInt(typeindex);
