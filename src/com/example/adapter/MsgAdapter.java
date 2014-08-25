@@ -55,7 +55,6 @@ public class MsgAdapter extends BaseAdapter{
 			convertView.setTag(holder);
 		}else
 			holder = (MsgHolder) convertView.getTag();
-		Log.e("debug","getview");
 		holder.setDate(msglist.get(position), context);
 		final int index = position;
 		convertView.setOnClickListener(new OnClickListener() {

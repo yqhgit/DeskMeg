@@ -23,7 +23,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class TalkToActivity extends Activity{
+public class TalkToActivity extends BaseActivity{
     private Context context;
     private LinearLayout contentlayout;
     private ImageView backimg;

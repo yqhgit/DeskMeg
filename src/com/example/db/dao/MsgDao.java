@@ -116,10 +116,11 @@ public class MsgDao {
 	        String date = cursor.getString(cursor.getColumnIndex("date"));
 	        String lastmsg = cursor.getString(cursor.getColumnIndex("snippet"));
 	        int id = cursor.getInt(cursor.getColumnIndex("_id"));
+	        
 	        int recipient_ids = cursor.getInt(cursor.getColumnIndex("recipient_ids"));
 	        String num = getNumByRecipient_id(recipient_ids);
+	        Log.e("num", num+"");
 	        String displayName = getDisplayNameByphone(num);
-	        Log.e("cursor","num="+num);
 	        AllContact allContact = new AllContact(id, lastmsg, date, displayName,getPhotoByNum(num));
 	        allContact.print();
 	        list.add(allContact);
@@ -132,9 +133,11 @@ public class MsgDao {
 	 * @return
 	 */
     private String getNumByRecipient_id(int id) {
-        // TODO Auto-generated method stub
+        // TODO Auto-generated method stub  canonical_addresses
+//        Cursor cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]
+//                {"address"}, "_id = ?", new String[]{String.valueOf(id)}, null);
         Cursor cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]
-                {"address"}, "_id = ?", new String[]{String.valueOf(id)}, null);
+                {"* from canonical_addresses--"}, "_id = ?", new String[]{String.valueOf(id)}, null);
         if(cursor.moveToNext())
             return cursor.getString(cursor.getColumnIndex("address"));
         return null;

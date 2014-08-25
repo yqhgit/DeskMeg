@@ -4,6 +4,7 @@ import com.example.bean.AllContact;
 import com.example.bean.Msg;
 import com.example.deskmsg.R;
 import com.example.util.DateUtil;
+import com.example.util.ImageUtil;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -29,16 +30,20 @@ public class MsgHolder {
     /*
      * context用户获取图片资源
      */
+    @SuppressWarnings("deprecation")
     public void setDate(AllContact outline, Context context){
-        Log.e("debug","set");
     	contacter.setText(outline.getDisplayName());
     	msgoutline.setText(outline.getLastmsg());
     	//date.setText(DateUtil.getOutlineListInfo(outline.getLastdate()));
     	date.setText(outline.getLastdate());
     	//设置图片的默认资源
     	if(outline.getPhotobitmap()!=null)
-    	    photo.setBackgroundDrawable(new BitmapDrawable(outline.getPhotobitmap()));
-    	else
-    	    photo.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
+    	    
+    	    photo.setBackgroundDrawable(new BitmapDrawable(ImageUtil.processImage(outline.getPhotobitmap())));
+    	else{
+    	    //photo.setBackgroundDrawable(
+    	    //        ImageUtil.getRoundImgFromDrawable(context.getResources().getDrawable(R.drawable.ic_launcher)));
+    	    photo.setImageBitmap(ImageUtil.processImage(ImageUtil.convertFromDrawable(context.getResources().getDrawable(R.drawable.data_clean))));
+    	}
     }
 }
