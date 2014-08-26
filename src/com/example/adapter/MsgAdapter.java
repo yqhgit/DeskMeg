@@ -56,19 +56,6 @@ public class MsgAdapter extends BaseAdapter{
 		}else
 			holder = (MsgHolder) convertView.getTag();
 		holder.setDate(msglist.get(position), context);
-		final int index = position;
-		convertView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				Bundle bundle = new Bundle();
-				bundle.putSerializable("allcontact", msglist.get(index));
-				intent.putExtra("bundle", bundle);
-				intent.setClass(context, TalkToActivity.class);
-				context.startActivity(intent);
-			}
-		});
 		return convertView;
 	}
 

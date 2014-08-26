@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_width="250dp" 
+    android:background="@android:color/white">
+    <LinearLayout 
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:background="@color/header_bg">
+	    <TextView android:layout_width="match_parent"
+	        android:layout_height="48dp"
+	        android:textColor="@android:color/white"
+	        android:textSize="14sp"
+	        android:text="选项"
+	        android:gravity="center_vertical"
+	        android:layout_marginLeft="8dp"/>
+    </LinearLayout>
+    <TextView android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textColor="@drawable/textclor_pressed"
+            android:textSize="14sp"
+            android:text="详情"
+            android:id="@+id/detial"
+            android:gravity="center_vertical"
+            android:background="@drawable/pressed_bg"
+            android:paddingLeft="8dp"/>
+    <ImageView android:layout_width="fill_parent"
+        android:layout_height="0.01dp"
+        android:background="@color/header_bg"/>
+    <TextView android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textColor="@drawable/textclor_pressed"
+            android:textSize="14sp"
+            android:text="删除"
+            android:id="@+id/delete"
+            android:background="@drawable/pressed_bg"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"/>
+    <ImageView android:layout_width="fill_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/header_bg"/>
+    <TextView android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textColor="@drawable/textclor_pressed"
+            android:textSize="14sp"
+            android:text="批量管理"
+            android:background="@drawable/pressed_bg"
+            android:id="@+id/batchManage"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"/>
+    <ImageView android:layout_width="fill_parent"
+        android:layout_height="0.01dp"
+        android:background="@color/header_bg"/>
+    <TextView android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textColor="@drawable/textclor_pressed"
+            android:textSize="14sp"
+            android:text="置顶"
+            android:id="@+id/putTop"
+            android:background="@drawable/pressed_bg"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"/>
+
+</LinearLayout>

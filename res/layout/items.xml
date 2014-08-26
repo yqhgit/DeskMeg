@@ -6,13 +6,13 @@
     android:background="@android:color/white"
     >
     <RelativeLayout android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:padding="5dp"
         >
         <ImageView android:layout_alignParentLeft="true"
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_centerVertical="true"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:id="@+id/photo"
             />
         <TextView android:layout_width="wrap_content"
@@ -21,7 +21,8 @@
             android:id="@+id/contacter"
             android:text="我们"
             android:layout_marginLeft="10dp"
-            android:textSize="15sp"
+            android:layout_marginTop="3dp"
+            android:textSize="16sp"
             android:textColor="@color/textcolor_blackgray"
             android:layout_toRightOf="@id/photo"
             android:ellipsize="end"/>
@@ -31,7 +32,9 @@
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/photo"
             android:text="我们"
+            android:textColor="@color/textcolor_darkgray"
             android:layout_marginLeft="10dp"
+            android:layout_marginBottom="3dp"
             android:singleLine="true"
             android:textSize="13sp"
             />
@@ -41,7 +44,7 @@
             android:id="@+id/msgdate"
             android:layout_marginRight="10dp"
             android:layout_alignTop="@id/contacter"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:text="fshoh45"
             android:ellipsize="end"
             />

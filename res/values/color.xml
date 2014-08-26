@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#10ffffff</color>
-    <color name="item_partline">#9f9eaa</color>
+    <color name="item_partline">#D2D2D8</color>
     <color name="header_bg">#02CA16</color>
     <color name="textcolor_white">#ffffff</color>
     <color name="textcolor_blackgray">#555555</color>
+    <color name="textcolor_darkgray">#A5A5A5</color>
     <color name="bg_grey">#E3E3E3</color>
+    <color name="icon_bg">#4F4F4F</color>
 </resources>

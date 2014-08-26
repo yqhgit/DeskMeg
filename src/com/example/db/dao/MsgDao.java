@@ -39,29 +39,37 @@ public class MsgDao {
      */
     public List<Msg> searchnewmsg(){
     	List<Msg> list = new ArrayList<Msg>();
+    	Cursor cursor = null;
+    	try {
+    	    cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]{"_id","address","date","read","body"}, 
+                    "read = ?", new String[]{"0"}, "date desc");
+            int idindex = cursor.getColumnIndex("_id");
+            int addressindex = cursor.getColumnIndex("address");
+            int dateindex = cursor.getColumnIndex("date");
+            int readindex = cursor.getColumnIndex("read");
+            int bodyindex = cursor.getColumnIndex("body");
+            while(cursor.moveToNext()){
+                Msg msg = new Msg();
+                msg.setId(cursor.getInt(idindex));
+                String phone = cursor.getString(addressindex);
+                if(phone.length() > 11){
+                    phone = phone.substring(phone.length()-11, phone.length());
+                }
+                msg.setAddress(phone);
+                msg.setIsread(Boolean.parseBoolean(cursor.getString(readindex)));
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                msg.setDate(formatter.format(new Date(Long.parseLong(cursor.getString(dateindex)))));
+                msg.setContent(cursor.getString(bodyindex));
+                msg.setDisplayName(getDisplayNameByphone(phone));
+                list.add(msg);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }finally{
+            if(cursor != null)
+                cursor.close();
+        }
     	
-    	Cursor cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]{"_id","address","date","read","body"}, 
-                "read = ?", new String[]{"0"}, "date desc");
-    	int idindex = cursor.getColumnIndex("_id");
-    	int addressindex = cursor.getColumnIndex("address");
-    	int dateindex = cursor.getColumnIndex("date");
-    	int readindex = cursor.getColumnIndex("read");
-    	int bodyindex = cursor.getColumnIndex("body");
-    	while(cursor.moveToNext()){
-    		Msg msg = new Msg();
-    		msg.setId(cursor.getInt(idindex));
-    		String phone = cursor.getString(addressindex);
-    		if(phone.length() > 11){
-    			phone = phone.substring(phone.length()-11, phone.length());
-    		}
-    		msg.setAddress(phone);
-    		msg.setIsread(Boolean.parseBoolean(cursor.getString(readindex)));
-    		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    		msg.setDate(formatter.format(new Date(Long.parseLong(cursor.getString(dateindex)))));
-    		msg.setContent(cursor.getString(bodyindex));
-    		msg.setDisplayName(getDisplayNameByphone(phone));
-    		list.add(msg);
-    	}
     	return list;
     }
     /**
@@ -86,23 +94,40 @@ public class MsgDao {
 	 * 通过号码获取联系人名称
 	 */
 	public String getDisplayNameByphone(String phone){
-		int contact_id = -1;
-		Cursor cursor = context.getContentResolver().query(Phone.CONTENT_URI, new String[]{"raw_contact_id","data1"}, 
-				ContactsContract.Data.MIMETYPE+" = ?", new String[]{"5"}, null);
+	    Cursor cursor = null,cursor2 = null;
+	    try {
+	        int contact_id = -1;
+	        cursor = context.getContentResolver().query(Phone.CONTENT_URI, new String[]{"raw_contact_id","data1"}, 
+	                ContactsContract.Data.MIMETYPE+" = ?", new String[]{"5"}, null);
+	        
+	        while(cursor.moveToNext()){
+	            if(PhoneNumberUtils.compare(phone, cursor.getString(cursor.getColumnIndex("data1")))){
+	                contact_id = cursor.getInt(cursor.getColumnIndex("raw_contact_id"));
+	            }
+	        }
+	        if(contact_id == -1){
+	            return phone;
+	            }
+	        cursor2 = context.getContentResolver().query(Phone.CONTENT_URI, new String[]{"data1"}, 
+	                   "raw_contact_id = ? and mimetype_id = ?", new String[]{String.valueOf(contact_id),"7"},null);
+	        if(cursor.moveToFirst()){
+	            String s = cursor2.getString(cursor2.getColumnIndex("data1"));
+	            return s;
+	        }else{
+	            return phone;
+	            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }finally{
+            if(cursor != null){
+                cursor.close();
+            }
+            if(cursor2 != null){
+                cursor2.close();
+            }
+        }
+		return "";
 		
-		while(cursor.moveToNext()){
-			if(PhoneNumberUtils.compare(phone, cursor.getString(cursor.getColumnIndex("data1")))){
-				contact_id = cursor.getInt(cursor.getColumnIndex("raw_contact_id"));
-			}
-		}
-		if(contact_id == -1)
-			return phone;
-		Cursor cursor2 = context.getContentResolver().query(Phone.CONTENT_URI, new String[]{"data1"}, 
-				   "raw_contact_id = ? and mimetype_id = ?", new String[]{String.valueOf(contact_id),"7"},null);
-		if(cursor.moveToFirst()){
-			return cursor2.getString(cursor2.getColumnIndex("data1"));
-		}else
-			return phone;
 	}
 	/**
 	 *获取所有联系人信息的列表
@@ -110,21 +135,30 @@ public class MsgDao {
 	public List<AllContact> getContactMsg(){
 	    List<AllContact> list = new ArrayList<AllContact>();
 	    //{"_id","date","snippet","recipient_ids"}
-	    Cursor cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]
-	            {"* from threads--"}, null, null, "date desc");
-	    while(cursor.moveToNext()){
-	        String date = cursor.getString(cursor.getColumnIndex("date"));
-	        String lastmsg = cursor.getString(cursor.getColumnIndex("snippet"));
-	        int id = cursor.getInt(cursor.getColumnIndex("_id"));
-	        
-	        int recipient_ids = cursor.getInt(cursor.getColumnIndex("recipient_ids"));
-	        String num = getNumByRecipient_id(recipient_ids);
-	        Log.e("num", num+"");
-	        String displayName = getDisplayNameByphone(num);
-	        AllContact allContact = new AllContact(id, lastmsg, date, displayName,getPhotoByNum(num));
-	        allContact.print();
-	        list.add(allContact);
-	    }
+	    Cursor cursor = null;
+	    try {
+	        cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]
+	                {"* from threads--"}, null, null, "date desc");
+	        while(cursor.moveToNext()){
+	            String date = cursor.getString(cursor.getColumnIndex("date"));
+	            String lastmsg = cursor.getString(cursor.getColumnIndex("snippet"));
+	            int id = cursor.getInt(cursor.getColumnIndex("_id"));
+	            
+	            int recipient_ids = cursor.getInt(cursor.getColumnIndex("recipient_ids"));
+	            String num = getNumByRecipient_id(recipient_ids);
+	            Log.e("num", num+"");
+	            String displayName = getDisplayNameByphone(num);
+	            AllContact allContact = new AllContact(id, lastmsg, date, displayName,getPhotoByNum(num));
+	            allContact.print();
+	            list.add(allContact);
+	        }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }finally{
+            if(cursor!=null){
+                cursor.close();
+            }
+        }
 	    return list;
 	}
 	/**
@@ -136,10 +170,20 @@ public class MsgDao {
         // TODO Auto-generated method stub  canonical_addresses
 //        Cursor cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]
 //                {"address"}, "_id = ?", new String[]{String.valueOf(id)}, null);
-        Cursor cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]
-                {"* from canonical_addresses--"}, "_id = ?", new String[]{String.valueOf(id)}, null);
-        if(cursor.moveToNext())
-            return cursor.getString(cursor.getColumnIndex("address"));
+        Cursor cursor = null;
+        try {
+            cursor = context.getContentResolver().query(Uri.parse("content://mms-sms/canonical-addresses"), new String[]
+                    {"addresses"}, "_id = ?", new String[]{String.valueOf(id)}, null);
+            if(cursor.moveToNext())
+                return cursor.getString(cursor.getColumnIndex("address"));;
+                
+        } catch (Exception e) {
+            // TODO: handle exception
+        }finally{
+            if(cursor!=null)
+                cursor.close();
+        }
+        
         return null;
     }
     /**
@@ -147,49 +191,70 @@ public class MsgDao {
      * @return
      */
     public byte[] getPhotoByNum(String num){
-        int contact_id = -1;
-        Cursor cursor = context.getContentResolver().query(Phone.CONTENT_URI, new String[]{"raw_contact_id","data1"}, 
-                ContactsContract.Data.MIMETYPE+" = ?", new String[]{"5"}, null);
-        
-        while(cursor.moveToNext()){
-            if(PhoneNumberUtils.compare(num, cursor.getString(cursor.getColumnIndex("data1")))){
-                contact_id = cursor.getInt(cursor.getColumnIndex("raw_contact_id"));
+        Cursor cursor = null, cursor2 = null;
+        try {
+            
+            int contact_id = -1;
+            cursor = context.getContentResolver().query(Phone.CONTENT_URI, new String[]{"raw_contact_id","data1"}, 
+                    ContactsContract.Data.MIMETYPE+" = ?", new String[]{"5"}, null);
+            
+            while(cursor.moveToNext()){
+                if(PhoneNumberUtils.compare(num, cursor.getString(cursor.getColumnIndex("data1")))){
+                    contact_id = cursor.getInt(cursor.getColumnIndex("raw_contact_id"));
+                }
+            }
+            if(contact_id == -1){
+                return null;
+            }
+            byte[] photo = null;
+            cursor2 = context.getContentResolver().query(Phone.CONTENT_URI, new String[]{"data15"}, 
+                       "raw_contact_id = ? and mimetype_id = ?", new String[]{String.valueOf(contact_id),"10"},null);
+            if(cursor.moveToFirst())
+                photo = cursor2.getBlob(cursor2.getColumnIndex("data15"));
+            return photo;
+        } catch (Exception e) {
+            // TODO: handle exception
+        }finally{
+            if(cursor!=null)
+                cursor.close();
+            if(cursor2!=null){
+                cursor2.close();
             }
         }
-        if(contact_id == -1){
-            Log.e("cursor", "getcontact fail");
-            return null;
-        }
-        byte[] photo = null;
-        Cursor cursor2 = context.getContentResolver().query(Phone.CONTENT_URI, new String[]{"data15"}, 
-                   "raw_contact_id = ? and mimetype_id = ?", new String[]{String.valueOf(contact_id),"10"},null);
-        if(cursor.moveToFirst())
-            photo = cursor2.getBlob(cursor2.getColumnIndex("data15"));
-        return photo;
+        return null;
+        
     }
     public List<Msg> getMsgByThread_id(int thread_id){
         List<Msg> list = new ArrayList<Msg>();
-        Cursor cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]{"_id","date","body","type"}, 
-                "thread_id = ?", new String[]{String.valueOf(thread_id)}, "date desc");
-        int idindex = cursor.getColumnIndex("_id");
-        int typeindex = cursor.getColumnIndex("type");
-        int dateindex = cursor.getColumnIndex("date");
-        int bodyindex = cursor.getColumnIndex("body");
-        while(cursor.moveToNext()){
-            Log.e("cursor", "not null");
-            Msg msg = new Msg();
-            msg.setId(cursor.getInt(idindex));
-            int type = cursor.getInt(typeindex);
-            //type为1接受  2发送
-            if(type == 1){
-                msg.setSendorreceive(false);
-            }else
-                msg.setSendorreceive(true);
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            msg.setDate(formatter.format(new Date(Long.parseLong(cursor.getString(dateindex)))));
-            msg.setContent(cursor.getString(bodyindex));
-            list.add(msg);
+        Cursor cursor = null;
+        try {
+            cursor = context.getContentResolver().query(Uri.parse(SMS_CONTENT), new String[]{"_id","date","body","type"}, 
+                    "thread_id = ?", new String[]{String.valueOf(thread_id)}, "date desc");
+            int idindex = cursor.getColumnIndex("_id");
+            int typeindex = cursor.getColumnIndex("type");
+            int dateindex = cursor.getColumnIndex("date");
+            int bodyindex = cursor.getColumnIndex("body");
+            while(cursor.moveToNext()){
+                Msg msg = new Msg();
+                msg.setId(cursor.getInt(idindex));
+                int type = cursor.getInt(typeindex);
+                //type为1接受  2发送
+                if(type == 1){
+                    msg.setSendorreceive(false);
+                }else
+                    msg.setSendorreceive(true);
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                msg.setDate(formatter.format(new Date(Long.parseLong(cursor.getString(dateindex)))));
+                msg.setContent(cursor.getString(bodyindex));
+                list.add(msg);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }finally{
+            if(cursor!=null)
+                cursor.close();
         }
+        
         return list;
     }
 }

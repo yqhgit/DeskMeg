@@ -43,7 +43,7 @@ public class MsgHolder {
     	else{
     	    //photo.setBackgroundDrawable(
     	    //        ImageUtil.getRoundImgFromDrawable(context.getResources().getDrawable(R.drawable.ic_launcher)));
-    	    photo.setImageBitmap(ImageUtil.processImage(ImageUtil.convertFromDrawable(context.getResources().getDrawable(R.drawable.data_clean))));
+    	    photo.setImageBitmap(ImageUtil.processImage(ImageUtil.convertFromDrawable(context.getResources().getDrawable(R.drawable.ic_launcher))));
     	}
     }
 }
