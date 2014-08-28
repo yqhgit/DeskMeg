@@ -56,21 +56,20 @@ public class MsgAdapter extends BaseAdapter{
 		MsgHolder holder = null;
 		if(convertView == null){
 			convertView = LayoutInflater.from(context).inflate(R.layout.items, null);
-			convertView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.pressed_bg));
 			holder = new MsgHolder(convertView);
 			convertView.setTag(holder);
 		}else
 			holder = (MsgHolder) convertView.getTag();
 		Log.e("check", "ingetview"+MainActivity.flag);
-		//if(MainActivity.flag == 1){
+		if(MainActivity.flag == 1){
 		    Log.e("check", "in");
     		if(booleanArray.get(position)){
     		    Log.e("check", "true");
-    		    convertView.setSelected(true);
-    		    convertView.setPressed(true);
-    		    }
-    		    
-		//}
+    		    convertView.setBackgroundColor(0xffF0AFD0);
+    		}else
+    			convertView.setBackgroundColor(0xffffffff);
+		}else
+			convertView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.pressed_bg));
 		holder.setDate(msglist.get(position), context);
 		return convertView;
 	}
@@ -90,7 +89,6 @@ public class MsgAdapter extends BaseAdapter{
 	        booleanArray.delete(position);
 	}
 	public void removeAll(){
-	    Log.e("remove", "remove");
 	    booleanArray = new SparseBooleanArray();
 	}
 }

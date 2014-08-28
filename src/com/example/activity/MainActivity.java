@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
-                        changelayout();
+                        changeview();
                     }
                 });
         putTop.setOnClickListener(new OnClickListener() {
@@ -152,26 +152,34 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                changelayout();
+                changeview();
             }
         });
 	}
-    protected void changelayout() {
+    protected void changeview() {
         // TODO Auto-generated method stub
         if(flag == 0){
             menu_dialog.dismiss();
             bottomlayout.setVisibility(View.VISIBLE);
             cancle.setVisibility(View.VISIBLE);
             flag = 1;
+            listview.setLongClickable(false);
             //listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         }else{
-            Log.e("flag", flag+"");
             bottomlayout.setVisibility(View.GONE);
             cancle.setVisibility(View.GONE);
             adapter.removeAll();
             adapter.notifyDataSetChanged();
+            listview.post(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					flag = 0;
+					adapter.notifyDataSetChanged();
+				}
+			});
+            listview.setLongClickable(true);
         }
-        
     }
     void startservice(){
     	Intent intent = new Intent();
