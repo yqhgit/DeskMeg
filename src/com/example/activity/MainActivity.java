@@ -6,35 +6,54 @@ import com.example.adapter.MsgAdapter;
 import com.example.bean.AllContact;
 import com.example.db.dao.MsgDao;
 import com.example.deskmsg.R;
+import com.example.deskmsg.R.color;
 
 import android.R.menu;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources.Theme;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class MainActivity extends BaseActivity {
     private ListView listview;
     private List<AllContact> list;
-    Context context;
+    private Context context;
     private Dialog menu_dialog;
     private View v;
     private TextView detail;
     private TextView batch_manage;
     private TextView putTop;
     private TextView delete;
+    private TextView delete_sure;
+    private TextView desk_sure;
+    LinearLayout bottomlayout;
+    RelativeLayout actionbar;
+    private ImageView cancle;
     private int index = -1;
+    static public int flag = 0;
+    private boolean selected[]; 
+    private MsgAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -44,14 +63,23 @@ public class MainActivity extends BaseActivity {
 		initView();
 		
 		list = new MsgDao(context).getContactMsg();
-		if(list.size()>0)
-		    listview.setAdapter(new MsgAdapter(list,context));
+		if(list.size()>0){
+		    adapter = new MsgAdapter(list,context);
+		    listview.setAdapter(adapter);
+		    }
+		selected = new boolean[list.size()];   //默认值为false
 		initListener();
 		startservice();
 	}
-	private void initView() {
+	@SuppressLint("NewApi")
+    private void initView() {
         // TODO Auto-generated method stub
 	    listview = (ListView) findViewById(R.id.listmsg);
+	    actionbar = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.header, null).findViewById(R.id.header);
+	    bottomlayout = (LinearLayout) findViewById(R.id.bottomlayout);
+	    delete_sure = (TextView) findViewById(R.id.delete_sure);
+	    desk_sure = (TextView) findViewById(R.id.desk_sure);
+	    cancle = (ImageView) findViewById(R.id.cancel);
 	    menu_dialog = new Dialog(context,android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
 	    v = LayoutInflater.from(context).inflate(R.layout.listlongclick_menu, null);
 	    detail = (TextView) v.findViewById(R.id.detial);
@@ -60,17 +88,26 @@ public class MainActivity extends BaseActivity {
 	    batch_manage = (TextView) v.findViewById(R.id.batchManage);
 	    menu_dialog.setContentView(v);
     }
+    @SuppressLint("NewApi")
     void initListener(){
 	    listview.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("allcontact", list.get(position));
-                intent.putExtra("bundle", bundle);
-                intent.setClass(context, TalkToActivity.class);
-                context.startActivity(intent);
+                //常规模式
+                if(flag == 0){
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("allcontact", list.get(position));
+                    intent.putExtra("bundle", bundle);
+                    intent.setClass(context, TalkToActivity.class);
+                    context.startActivity(intent);
+                }
+                //批处理模式
+                if(flag == 1){
+                    adapter.changeState(position);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 	    listview.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -89,7 +126,53 @@ public class MainActivity extends BaseActivity {
                 // TODO Auto-generated method stub
             }
         });
+        batch_manage.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        changelayout();
+                    }
+                });
+        putTop.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+            }
+        });
+        detail.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+            }
+        });
+        cancle.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                changelayout();
+            }
+        });
 	}
+    protected void changelayout() {
+        // TODO Auto-generated method stub
+        if(flag == 0){
+            menu_dialog.dismiss();
+            bottomlayout.setVisibility(View.VISIBLE);
+            cancle.setVisibility(View.VISIBLE);
+            flag = 1;
+            //listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        }else{
+            Log.e("flag", flag+"");
+            bottomlayout.setVisibility(View.GONE);
+            cancle.setVisibility(View.GONE);
+            adapter.removeAll();
+            adapter.notifyDataSetChanged();
+        }
+        
+    }
     void startservice(){
     	Intent intent = new Intent();
 		intent.setClass(this, ReceiveMsg.class);

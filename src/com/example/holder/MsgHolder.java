@@ -1,5 +1,7 @@
 package com.example.holder;
 
+import java.util.Random;
+
 import com.example.bean.AllContact;
 import com.example.bean.Msg;
 import com.example.deskmsg.R;
@@ -43,7 +45,16 @@ public class MsgHolder {
     	else{
     	    //photo.setBackgroundDrawable(
     	    //        ImageUtil.getRoundImgFromDrawable(context.getResources().getDrawable(R.drawable.ic_launcher)));
-    	    photo.setImageBitmap(ImageUtil.processImage(ImageUtil.convertFromDrawable(context.getResources().getDrawable(R.drawable.ic_launcher))));
+    	    Random random = new Random();
+    	    int i = random.nextInt(3) + 1;
+    	    if(i == 1)
+    	        i = R.drawable.image1;
+    	    if(i == 2)
+    	        i = R.drawable.images2;
+    	    if(i == 3)
+    	        i = R.drawable.image3;
+    	    
+    	    photo.setImageBitmap(ImageUtil.processImage(ImageUtil.convertFromDrawable(context.getResources().getDrawable(i))));
     	}
     }
 }

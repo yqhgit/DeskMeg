@@ -2,7 +2,8 @@
 <resources>
     <color name="transparent">#10ffffff</color>
     <color name="item_partline">#D2D2D8</color>
-    <color name="header_bg">#02CA16</color>
+    <color name="header_bg">#94C249</color>
+    <color name="pink">#F0AFD0</color>
     <color name="textcolor_white">#ffffff</color>
     <color name="textcolor_blackgray">#555555</color>
     <color name="textcolor_darkgray">#A5A5A5</color>
