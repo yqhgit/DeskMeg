@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.res.Resources.Theme;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,7 +46,7 @@ public class MainActivity extends BaseActivity {
     private TextView batch_manage;
     private TextView putTop;
     private TextView delete;
-    private TextView delete_sure;
+    private TextView delete_all;
     private TextView desk_sure;
     LinearLayout bottomlayout;
     RelativeLayout actionbar;
@@ -54,6 +55,7 @@ public class MainActivity extends BaseActivity {
     static public int flag = 0;
     private boolean selected[]; 
     private MsgAdapter adapter;
+    private MsgDao msgdao;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -61,8 +63,8 @@ public class MainActivity extends BaseActivity {
 		setContentView(R.layout.main);
 		context = this;
 		initView();
-		
-		list = new MsgDao(context).getContactMsg();
+		msgdao = new MsgDao(context);
+		list = msgdao.getContactMsg();
 		if(list.size()>0){
 		    adapter = new MsgAdapter(list,context);
 		    listview.setAdapter(adapter);
@@ -77,7 +79,7 @@ public class MainActivity extends BaseActivity {
 	    listview = (ListView) findViewById(R.id.listmsg);
 	    actionbar = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.header, null).findViewById(R.id.header);
 	    bottomlayout = (LinearLayout) findViewById(R.id.bottomlayout);
-	    delete_sure = (TextView) findViewById(R.id.delete_sure);
+	    delete_all = (TextView) findViewById(R.id.delete_sure);
 	    desk_sure = (TextView) findViewById(R.id.desk_sure);
 	    cancle = (ImageView) findViewById(R.id.cancel);
 	    menu_dialog = new Dialog(context,android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
@@ -119,11 +121,21 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
+	    delete_all.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                deleteSelctedArray();
+            }
+        });
 	    delete.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                delete(index);
+                adapter.notifyDataSetChanged();
             }
         });
         batch_manage.setOnClickListener(new OnClickListener() {
@@ -156,6 +168,33 @@ public class MainActivity extends BaseActivity {
             }
         });
 	}
+    /**
+     * 删除指定thread的短信组
+     * @param position thread_id
+     */
+    protected void delete(int position) {
+        // TODO Auto-generated method stub
+        msgdao.deleteByThread(list.get(position).getThread_id());
+        list.remove(position);
+    }
+    /**
+     * 删除所有选中的短信组
+     */
+    protected void deleteSelctedArray() {
+        // TODO Auto-generated method stub
+        SparseBooleanArray array = adapter.getBooleanArray();
+        if(array.size() == 0)
+            return;
+        for (int i = 0; i < array.size(); i++) {
+            if(array.valueAt(i))
+                delete(array.keyAt(i));
+        }
+        changeview();
+    }
+    
+    /**
+     * 进入或退出批处理时界面的改变
+     */
     protected void changeview() {
         // TODO Auto-generated method stub
         if(flag == 0){
@@ -181,6 +220,10 @@ public class MainActivity extends BaseActivity {
             listview.setLongClickable(true);
         }
     }
+    
+    /**
+     * 启动自动获取短信服务
+     */
     void startservice(){
     	Intent intent = new Intent();
 		intent.setClass(this, ReceiveMsg.class);

@@ -42,10 +42,12 @@ public final class R {
         public static final int list_activated_holo=0x7f020009;
         public static final int listmsg_photo_corner=0x7f02000a;
         public static final int pressed_bg=0x7f02000b;
-        public static final int sendbutton_selector=0x7f02000c;
-        public static final int talkcontent_bg=0x7f02000d;
-        public static final int talkcontentmyself_bg=0x7f02000e;
-        public static final int textclor_pressed=0x7f02000f;
+        public static final int red_pressed_bg=0x7f02000c;
+        public static final int red_textcolor_pressed=0x7f02000d;
+        public static final int sendbutton_selector=0x7f02000e;
+        public static final int talkcontent_bg=0x7f02000f;
+        public static final int talkcontentmyself_bg=0x7f020010;
+        public static final int textcolor_pressed=0x7f020011;
     }
     public static final class id {
         public static final int actionbar=0x7f09000c;

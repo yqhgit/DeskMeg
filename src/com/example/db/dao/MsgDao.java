@@ -79,6 +79,10 @@ public class MsgDao {
 		// TODO Auto-generated method stub
 		context.getContentResolver().delete(Uri.parse(SMS_CONTENT), "_id = ?", new String[]{String.valueOf(id)});
 	}
+	public void deleteByThread(int id) {
+        // TODO Auto-generated method stub
+        context.getContentResolver().delete(Uri.parse(SMS_CONTENT), "thread_id = ?", new String[]{String.valueOf(id)});
+    }
 	/**
 	 * 将未读信息改为已读状态
 	 * @param id
